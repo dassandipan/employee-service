@@ -28,25 +28,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private final EmployeeRepository empRepo;
 
+	//Create and Save Employee in Database using EmployeeRepository empRepo
 	@Override
 	public EmployeeDto create(CreateEmployeeRequest createEmployee) {
-		Employee employeeRequest = new Employee();
-		BeanUtils.copyProperties(createEmployee, employeeRequest);
-		Employee employee = empRepo.saveAndFlush(employeeRequest);
-		return mapModelToDto(employee);
 	}
 
+	//Get Employee by Id from Database using EmployeeRepository empRepo
 	@Override
 	public EmployeeDto viewById(Long id) {
 		Employee employee = findById(id);
 		return mapModelToDto(employee);
 	}
 
+	//Get All Employees from Database using EmployeeRepository empRepo
 	@Override
 	public List<EmployeeDto> getAll() {
 		return empRepo.findAll().stream().map(this::mapModelToDto).collect(Collectors.toList());
 	}
 
+	//Update Employee by Id in Database using EmployeeRepository empRepo
 	@Override
 	public EmployeeDto update(Long id, UpdateEmployeeRequest updateEmployee) {
 		Employee employee = findById(id);
@@ -55,12 +55,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return mapModelToDto(employee);
 	}
 
+	//Delete Employee by Id from Database using EmployeeRepository empRepo
 	@Override
 	public void delete(Long id) {
 		Employee employee = findById(id);
 		empRepo.delete(employee);
 	}
 
+	//Search Employee by Name, Designation and Department from Database using EmployeeRepository empRepo
 	@Override
 	public List<EmployeeDto> search(EmployeeSearchRequest request) {
 		Employee employee = new Employee(request.getName(), request.getDesignation(), request.getDepartment());
@@ -73,6 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employees.stream().map(this::mapModelToDto).collect(Collectors.toList());
 	}
 
+	//Find Employee by Id from Database using EmployeeRepository empRepo
 	private Employee findById(Long id) {
 		Optional<Employee> isEmployee = empRepo.findById(id);
 		if (isEmployee.isPresent()) {
@@ -82,6 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		throw new EmployeeNotFoundException(id);
 	}
 
+	//Map Employee to EmployeeDto
 	private EmployeeDto mapModelToDto(Employee employee) {
 		EmployeeDto employeeDto = new EmployeeDto();
 		BeanUtils.copyProperties(employee, employeeDto);
