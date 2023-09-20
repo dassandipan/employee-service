@@ -1,0 +1,9 @@
+logging:
+  level:
+    com.ascendion.sample: DEBUG
+server:  servlet:    context-path: /api/v1
+
+
+spring:  jpa:    show-sql: true  h2:    console:      enabled: true
+
+    
